@@ -16,11 +16,9 @@ export default function TopicCard({ topic, onProblemToggle }) {
 
   const handleProblemToggle = async (problemId) => {
     try {
-      const response = await api.progress.toggle(problemId);
-      if (response.message === 'Progress updated successfully') {
-        if (onProblemToggle) {
-          onProblemToggle();
-        }
+      await api.progress.toggle(topic.id, problemId);
+      if (onProblemToggle) {
+        onProblemToggle();
       }
     } catch (error) {
       console.error('Error toggling problem:', error);

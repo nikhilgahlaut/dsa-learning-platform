@@ -26,9 +26,9 @@ export const AuthProvider = ({ children }) => {
   const login = async (credentials) => {
     try {
       setError(null);
-      const userData = await api.auth.login(credentials);
-      setUser(userData);
-      return userData;
+      const response = await api.auth.login(credentials);
+      setUser(response.user);
+      return response;
     } catch (err) {
       setError(err.message);
       throw err;
@@ -38,9 +38,9 @@ export const AuthProvider = ({ children }) => {
   const register = async (userData) => {
     try {
       setError(null);
-      const newUser = await api.auth.register(userData);
-      setUser(newUser);
-      return newUser;
+      const response = await api.auth.register(userData);
+      setUser(response.user);
+      return response;
     } catch (err) {
       setError(err.message);
       throw err;

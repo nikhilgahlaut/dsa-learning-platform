@@ -1,4 +1,7 @@
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
+const API_URL = 'http://localhost:5000/api';
+
+// Helper to get the auth token
+const getAuthToken = () => localStorage.getItem('token');
 
 const handleResponse = async (response) => {
   if (!response.ok) {
@@ -15,10 +18,13 @@ export const api = {
         const response = await fetch(`${API_URL}/auth/login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(credentials),
-          credentials: 'include',
+          body: JSON.stringify(credentials)
         });
-        return handleResponse(response);
+        const data = await handleResponse(response);
+        if (data.token) {
+          localStorage.setItem('token', data.token);
+        }
+        return data;
       } catch (error) {
         console.error('Login error:', error);
         throw error;
@@ -27,14 +33,16 @@ export const api = {
     
     register: async (userData) => {
       try {
-        console.log('Making register request to:', `${API_URL}/auth/register`);
         const response = await fetch(`${API_URL}/auth/register`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(userData),
-          credentials: 'include',
+          body: JSON.stringify(userData)
         });
-        return handleResponse(response);
+        const data = await handleResponse(response);
+        if (data.token) {
+          localStorage.setItem('token', data.token);
+        }
+        return data;
       } catch (error) {
         console.error('Register error:', error);
         throw error;
@@ -43,11 +51,8 @@ export const api = {
     
     logout: async () => {
       try {
-        const response = await fetch(`${API_URL}/auth/logout`, {
-          method: 'POST',
-          credentials: 'include',
-        });
-        return handleResponse(response);
+        localStorage.removeItem('token');
+        return { success: true };
       } catch (error) {
         console.error('Logout error:', error);
         throw error;
@@ -56,8 +61,13 @@ export const api = {
     
     getProfile: async () => {
       try {
+        const token = getAuthToken();
+        if (!token) throw new Error('No auth token');
+        
         const response = await fetch(`${API_URL}/auth/profile`, {
-          credentials: 'include',
+          headers: {
+            'x-auth-token': token
+          }
         });
         return handleResponse(response);
       } catch (error) {
@@ -70,8 +80,11 @@ export const api = {
   topics: {
     getAll: async () => {
       try {
+        const token = getAuthToken();
         const response = await fetch(`${API_URL}/dsa/topics`, {
-          credentials: 'include',
+          headers: {
+            'x-auth-token': token
+          }
         });
         return handleResponse(response);
       } catch (error) {
@@ -82,8 +95,11 @@ export const api = {
     
     getById: async (id) => {
       try {
+        const token = getAuthToken();
         const response = await fetch(`${API_URL}/dsa/topics/${id}`, {
-          credentials: 'include',
+          headers: {
+            'x-auth-token': token
+          }
         });
         return handleResponse(response);
       } catch (error) {
@@ -94,11 +110,14 @@ export const api = {
   },
 
   progress: {
-    toggle: async (problemId) => {
+    toggle: async (topicId, problemId) => {
       try {
-        const response = await fetch(`${API_URL}/dsa/progress/${problemId}`, {
-          method: 'POST',
-          credentials: 'include',
+        const token = getAuthToken();
+        const response = await fetch(`${API_URL}/dsa/topics/${topicId}/problems/${problemId}/toggle`, {
+          method: 'PATCH',
+          headers: {
+            'x-auth-token': token
+          }
         });
         return handleResponse(response);
       } catch (error) {
@@ -109,8 +128,11 @@ export const api = {
     
     get: async () => {
       try {
+        const token = getAuthToken();
         const response = await fetch(`${API_URL}/dsa/progress`, {
-          credentials: 'include',
+          headers: {
+            'x-auth-token': token
+          }
         });
         return handleResponse(response);
       } catch (error) {
