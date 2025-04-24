@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { FaSearch, FaFilter, FaCheckCircle, FaExclamationCircle } from 'react-icons/fa';
-import TopicCard from '../Components/TopicCard';
+import TopicCard from '../components/TopicCard';
 import { api } from '../services/api';
 
 const DSASheet = () => {
