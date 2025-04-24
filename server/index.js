@@ -31,6 +31,11 @@ app.use(cors({
 // Middleware
 app.use(express.json());
 
+// Health check endpoint
+app.get('/', (req, res) => {
+  res.json({ status: 'ok', message: 'DSA Learning Platform API is running.' });
+});
+
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/dsa', dsaRoutes);

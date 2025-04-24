@@ -3,7 +3,17 @@
   command = "npm run build"
   publish = "dist"
 
-# Redirect all requests to index.html for client-side routing
+[build.environment]
+  VITE_API_URL = "https://your-render-app.onrender.com"
+
+# Proxy API requests to the backend service
+[[redirects]]
+  from = "/api/*"
+  to = "https://your-render-app.onrender.com/:splat"
+  status = 200
+  force = true
+
+# SPA routing fallback
 [[redirects]]
   from = "/*"
   to = "/index.html"
