@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 5000;
 
 // CORS configuration
 app.use(cors({
-    origin: ['http://localhost:5173', 'https://dsa-learning-platform.onrender.com'],
+    origin: ['http://localhost:5173', 'https://dsa-learning-project.netlify.app'],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token']
