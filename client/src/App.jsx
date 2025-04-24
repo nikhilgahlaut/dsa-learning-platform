@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Navbar from './Components/Navbar';
-import LoginForm from './Components/LoginForm';
-import Register from './pages/Register';
-import DSASheet from './Pages/DSASheet';
-import Profile from './pages/Profile';
-import { useAuth } from './contexts/AuthContext';
+import Navbar from './components/Navbar.jsx';
+import LoginForm from './components/LoginForm.jsx';
+import Register from './pages/Register.jsx';
+import DSASheet from './pages/DSASheet.jsx';
+import Profile from './pages/Profile.jsx';
+import { useAuth } from './contexts/AuthContext.jsx';
 
 function App() {
   const { isAuthenticated, logout } = useAuth();
