@@ -47,3 +47,20 @@ A comprehensive and user-friendly platform to learn and practice **Data Structur
 ```bash
 git clone https://github.com/yourusername/dsa-learning-platform.git
 cd dsa-learning-platform
+
+## Environment Variables
+
+### Backend
+Create a `.env` file in the `server/` directory with:
+```bash
+MONGODB_URI=<your MongoDB connection string>
+JWT_SECRET=<your JWT secret>
+CLIENT_URLS=http://localhost:5173,https://your-netlify-app.netlify.app
+PORT=5000
+```
+
+### Frontend
+Create a `.env` file in the `client/` directory with:
+```bash
+VITE_API_URL=https://your-render-app.onrender.com
+```

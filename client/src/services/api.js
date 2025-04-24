@@ -1,4 +1,6 @@
 const API_URL = import.meta.env.VITE_API_URL;
+// Define base API path (includes /api prefix)
+const BASE_URL = `${API_URL}/api`;
 
 // Helper to get the auth token
 const getAuthToken = () => localStorage.getItem('token');
@@ -15,7 +17,7 @@ export const api = {
   auth: {
     login: async (credentials) => {
       try {
-        const response = await fetch(`${API_URL}/auth/login`, {
+        const response = await fetch(`${BASE_URL}/auth/login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(credentials)
@@ -33,7 +35,7 @@ export const api = {
     
     register: async (userData) => {
       try {
-        const response = await fetch(`${API_URL}/auth/register`, {
+        const response = await fetch(`${BASE_URL}/auth/register`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(userData)
@@ -64,7 +66,7 @@ export const api = {
         const token = getAuthToken();
         if (!token) throw new Error('No auth token');
         
-        const response = await fetch(`${API_URL}/auth/profile`, {
+        const response = await fetch(`${BASE_URL}/auth/profile`, {
           headers: {
             'x-auth-token': token
           }
@@ -81,7 +83,7 @@ export const api = {
     getAll: async () => {
       try {
         const token = getAuthToken();
-        const response = await fetch(`${API_URL}/dsa/topics`, {
+        const response = await fetch(`${BASE_URL}/dsa/topics`, {
           headers: {
             'x-auth-token': token
           }
@@ -96,7 +98,7 @@ export const api = {
     getById: async (id) => {
       try {
         const token = getAuthToken();
-        const response = await fetch(`${API_URL}/dsa/topics/${id}`, {
+        const response = await fetch(`${BASE_URL}/dsa/topics/${id}`, {
           headers: {
             'x-auth-token': token
           }
@@ -113,7 +115,7 @@ export const api = {
     toggle: async (topicId, problemId) => {
       try {
         const token = getAuthToken();
-        const response = await fetch(`${API_URL}/dsa/topics/${topicId}/problems/${problemId}/toggle`, {
+        const response = await fetch(`${BASE_URL}/dsa/topics/${topicId}/problems/${problemId}/toggle`, {
           method: 'PATCH',
           headers: {
             'x-auth-token': token
@@ -129,7 +131,7 @@ export const api = {
     get: async () => {
       try {
         const token = getAuthToken();
-        const response = await fetch(`${API_URL}/dsa/progress`, {
+        const response = await fetch(`${BASE_URL}/dsa/progress`, {
           headers: {
             'x-auth-token': token
           }

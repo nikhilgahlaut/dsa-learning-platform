@@ -1,0 +1,10 @@
+# Netlify configuration for building and deploying the Vite React app
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# Redirect all requests to index.html for client-side routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200 

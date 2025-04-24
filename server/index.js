@@ -15,9 +15,14 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Add CLIENT_URLS array for CORS origins (supports comma-separated list)
+const CLIENT_URLS = process.env.CLIENT_URLS
+  ? process.env.CLIENT_URLS.split(',')
+  : [process.env.CLIENT_URL || 'http://localhost:5173'];
+
 // CORS configuration
 app.use(cors({
-    origin: ['http://localhost:5173', 'https://dsa-learning-project.netlify.app'],
+    origin: CLIENT_URLS,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token']
